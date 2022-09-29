@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="app.js" defer></script>
+    <title>Master Mind game task</title>
+  </head>
+  <body>
+    <div id="backdrop"></div>
+    <div class="modal" id="win-modal">
+      <a href="#" class="close-modal"></a>
+      
+      <p>To play again click the button bellow</p>
+      <button>Play again</button>
+    </div>
+    <div class="modal" id="lose-modal">
+      <a href="#" class="close-modal"></a>
+      <h3>You lost!
+      <h2>GAME OVER</h2>
+      <p>To play again click the button bellow</p>
+      <button>Play again</button>
+    </div>
+    <div class="container">
+      <main id="game-board">
+        <div class="game-col">
+          <div id="game-header"></div>
+          <div class="game-row"></div>
+          <div id="selection">
+            <div class="game-field fire"></div>
+            <div class="game-field lightning"></div>
+            <div class="game-field wind"></div>
+            <div class="game-field leaf"></div>
+          </div>
+        </div>
+        <div class="game-col" id="results-col">
+          <div id="legend">
+            <p><span></span> Correct logo, but at wrong position</p>
+            <p><span></span> Correct logo, correct position</p>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <img src="./assets/consulteer-logo.svg" alt="Consulteer" />
+      </footer>
+    </div>
+  </body>
+</html>
