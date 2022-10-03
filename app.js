@@ -1,4 +1,3 @@
-// DOM elements
 const gameBoardContainer = document.querySelector('.game-row');
 const selectionContainer = document.getElementById('selection');
 const selectionButtons = selectionContainer.querySelectorAll('.game-field');
@@ -10,7 +9,7 @@ const closeModalBtn = endGameModal.querySelector('a');
 const backdrop = document.getElementById('backdrop');
 
 // Variables
-let gameField = '';
+let gameField;
 let resultRow;
 let selectionFields;
 let resultFields;
@@ -33,38 +32,30 @@ const getSecretCombination = () => {
   }
 };
 
-// const createEl = (el, cssClass) => {
-//   el = document.createElement('div');
-//   el.classList = `${cssClass}`;
-// };
-
 const startGame = () => {
   const startNum = 1;
   const endBoard = 24;
   const endRow = 6;
   const rowFieldsNum = 4;
-  const rowClass = 'results-row';
-  const fieldCLass = 'game-field';
 
   const createRow = () => {
     resultRow = document.createElement('div');
     resultRow.classList = 'results-row';
   };
 
-  const createField = () => {
+  const createField = containerEl => {
     gameField = document.createElement('div');
     gameField.classList.add('game-field');
+    containerEl.append(gameField);
   };
 
   for (let i = startNum; i <= rowFieldsNum; i++) {
-    createField();
+    createField(secretCombinationContainer);
     gameField.innerHTML = '<img src="./assets/secret.svg" alt="Question mark">';
-    secretCombinationContainer.append(gameField);
   }
 
   for (let i = startNum; i <= endBoard; i++) {
-    createField();
-    gameBoardContainer.append(gameField);
+    createField(gameBoardContainer);
   }
 
   for (let i = endRow; i >= startNum; i--) {
@@ -72,8 +63,7 @@ const startGame = () => {
     resultRow.setAttribute('id', `row-${i}`);
     resultsContainer.prepend(resultRow);
     for (let j = startNum; j <= rowFieldsNum; j++) {
-      createField();
-      resultRow.append(gameField);
+      createField(resultRow);
     }
   }
 
