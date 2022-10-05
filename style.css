@@ -54,30 +54,16 @@ main {
 .results-row {
   display: flex;
   gap: 15px;
-  flex-direction: row-reverse;
 }
 
 #game-header {
   display: flex;
-  flex-grow: 1;
   gap: 15px;
   margin-bottom: 30px;
 }
 #game-header img {
   width: 70px;
   height: 70px;
-}
-
-.game-field {
-  height: 90px;
-  width: 90px;
-  border: 1px solid rgb(255, 255, 255);
-  font-size: 50px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  color: #808080;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #results-col {
@@ -125,12 +111,17 @@ main {
   margin-right: 10px;
   background-color: #eb5757;
 }
-.exact-match {
-  order: 2;
-}
 
-.value-match {
-  order: 1;
+.game-field {
+  height: 90px;
+  width: 90px;
+  border: 1px solid rgb(255, 255, 255);
+  font-size: 50px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #808080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .exact-match::after {
@@ -147,10 +138,6 @@ main {
   width: 60px;
   border-radius: 50%;
   background-color: #f2c94c;
-}
-
-.no-match {
-  order: 3;
 }
 
 .fire {
@@ -187,7 +174,6 @@ main {
   gap: 15px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(252, 252, 252, 0.15);
   background-color: #333;
   border-radius: 10px;
   -webkit-box-shadow: 8px 7px 5px -1px rgba(21, 51, 18, 1);
@@ -208,7 +194,6 @@ main {
 }
 
 .modal h2 {
-  color: #32cd32;
   font-size: 4em;
   z-index: 40;
 }
