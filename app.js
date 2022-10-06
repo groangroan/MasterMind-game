@@ -13,12 +13,12 @@ let gameField;
 let resultRow;
 let selectionFields;
 let resultFields;
-let secretCombinationFields;
+let secretComFields;
 
 const signs = ['fire', 'lightning', 'wind', 'leaf'];
 let secretCombination = [];
 
-// Game board and random secretCombination creation
+//Secret combination creation
 
 const getSecretCombination = () => {
   const getRandomInt = (min, max) => {
@@ -33,6 +33,8 @@ const getSecretCombination = () => {
   console.log(secretCombination);
 };
 
+// Game board creation
+
 const createRow = () => {
   resultRow = document.createElement('div');
   resultRow.classList = 'results-row';
@@ -46,8 +48,8 @@ const createField = containerEl => {
 
 const createGameBoard = () => {
   const startNum = 1;
-  const endBoard = 24;
-  const endRow = 6;
+  const endBoardNum = 24;
+  const endRowNum = 6;
   const rowFieldsNum = 4;
 
   for (let i = startNum; i <= rowFieldsNum; i++) {
@@ -55,11 +57,11 @@ const createGameBoard = () => {
     gameField.innerHTML = '<img src="./assets/secret.svg" alt="Question mark">';
   }
 
-  for (let i = startNum; i <= endBoard; i++) {
+  for (let i = startNum; i <= endBoardNum; i++) {
     createField(gameBoardContainer);
   }
 
-  for (let i = endRow; i >= startNum; i--) {
+  for (let i = endRowNum; i >= startNum; i--) {
     createRow();
     resultRow.setAttribute('id', `row-${i}`);
     resultsContainer.prepend(resultRow);
@@ -76,8 +78,7 @@ createGameBoard();
 let gameWin;
 let gameOver;
 selectionFields = gameBoardContainer.querySelectorAll('.game-field');
-secretCombinationFields =
-  secretCombinationContainer.querySelectorAll('.game-field');
+secretComFields = secretCombinationContainer.querySelectorAll('.game-field');
 resultRow = resultsContainer.querySelectorAll('.results-row');
 
 const playerSelection = [];
@@ -85,10 +86,7 @@ const playerRoundSelection = [];
 const roundLenght = 4;
 let fieldNumSel = 0;
 let oneRound;
-
 let rowIdNum = 0;
-
-// Click event for player selection
 
 // Display of player selection and game play
 
@@ -96,6 +94,7 @@ const playGame = () => {
   getSecretCombination();
   let sign;
   const selectors = [...selectionButtons];
+
   if (gameOver === true) {
     return;
   } else {
@@ -120,8 +119,8 @@ playGame();
 
 const checkResult = () => {
   if (secretCombination.every((v, i) => v === oneRound[i])) {
-    displaySecretCombination();
     gameWin = true;
+    displaySecretCombination();
     toggleModal(endGameModal);
   } else if (playerSelection.length >= 6) {
     gameWin = false;
@@ -131,6 +130,8 @@ const checkResult = () => {
 
   matchingResults();
 };
+
+// Displaying result fields
 
 const matchingResults = () => {
   resultFields = resultRow[rowIdNum].querySelectorAll('.game-field');
@@ -144,10 +145,6 @@ const matchingResults = () => {
   let secretCombinationCopy = [...secretCombination];
   let oneRoundCopy = [...oneRound];
 
-  let exactMatchArr;
-  let valueMatchArr;
-  let noMatchArr;
-
   for (let i = 0; i < secretCombination.length; i++) {
     if (secretCombination[i] === oneRoundCopy[i]) {
       resultFields[i].classList.add(exactMatch);
@@ -159,6 +156,7 @@ const matchingResults = () => {
   for (let j = 0; j < secretCombination.length; j++) {
     if (secretCombinationCopy.indexOf(oneRoundCopy[j]) !== -1) {
       resultFields[j].classList.add(valueMatch);
+      secretCombinationCopy[secretCombinationCopy.indexOf(oneRound[j])] = 0;
     } else if (!resultFields[j].classList.contains(exactMatch)) {
       resultFields[j].classList.add(noMatch);
     }
@@ -170,13 +168,15 @@ const matchingResults = () => {
 
   let resultFieldsArr = Array.from(resultFields);
 
-  exactMatchArr = resultFieldsArr.filter(e =>
+  const exactMatchArr = resultFieldsArr.filter(e =>
     e.matches('.game-field.exact-match')
   );
-  valueMatchArr = resultFieldsArr.filter(e =>
+  const valueMatchArr = resultFieldsArr.filter(e =>
     e.matches('.game-field.value-match')
   );
-  noMatchArr = resultFieldsArr.filter(e => e.matches('.game-field.no-match'));
+  const noMatchArr = resultFieldsArr.filter(e =>
+    e.matches('.game-field.no-match')
+  );
 
   resultFieldsArr = [...exactMatchArr, ...valueMatchArr, ...noMatchArr];
 
@@ -191,7 +191,7 @@ const matchingResults = () => {
 
 const displaySecretCombination = () => {
   let index = 0;
-  for (const solField of secretCombinationFields) {
+  for (const solField of secretComFields) {
     solField.classList.add(secretCombination[index]);
     solField.innerHTML = '';
     index++;
@@ -207,9 +207,10 @@ const toggleModal = () => {
   endGameModal.classList.toggle('visible');
 
   toggleBackdrop();
+  console.log(gameWin);
 
-  if (gameWin == true) {
-    h2, style, (color = '#32cd32');
+  if (gameWin === true) {
+    h2.style.color = '#32cd32';
     h3.innerHTML = 'Congratulations.';
     h2.innerHTML = 'YOU WON!';
   } else {
@@ -221,7 +222,14 @@ const toggleModal = () => {
   return (gameOver = true);
 };
 
-const toggleBackdrop = () => backdrop.classList.toggle('visible');
+const toggleBackdrop = () => {
+  backdrop.classList.toggle('visible');
+};
+
+const endGameClickHandler = () => {
+  toggleModal();
+  selectionContainer.replaceWith(selectionContainer.cloneNode(true));
+};
 
 newGameModalBtn.addEventListener('click', () => {
   toggleModal(endGameModal);
@@ -229,8 +237,10 @@ newGameModalBtn.addEventListener('click', () => {
   return (gameOver = false);
 });
 
-closeModalBtn.addEventListener('click', toggleModal);
-backdrop.addEventListener('click', toggleModal);
+closeModalBtn.addEventListener('click', endGameClickHandler);
+backdrop.addEventListener('click', endGameClickHandler);
+
+// Game reset function
 
 const resetGame = () => {
   selectionFields.forEach(field => (field.className = 'game-field'));
@@ -241,7 +251,7 @@ const resetGame = () => {
     }
   }
 
-  secretCombinationFields.forEach(
+  secretComFields.forEach(
     field =>
       (field.innerHTML = '<img src="./assets/secret.svg" alt="Question mark">')
   );
