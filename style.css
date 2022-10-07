@@ -12,16 +12,8 @@ h1 {
 }
 
 body {
-  background: url('./assets/fire-bg.jpg') center center no-repeat;
+  background: url('/assets/images/fire-bg.jpg') center center no-repeat;
   background-size: cover;
-}
-
-.container {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 footer {
@@ -42,6 +34,14 @@ main {
   padding: 30px 40px;
   display: flex;
   align-items: flex-end;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .game-col,
@@ -117,7 +117,6 @@ main {
   width: 90px;
   border: 1px solid rgb(255, 255, 255);
   font-size: 50px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
   color: #808080;
   display: flex;
   align-items: center;
@@ -141,19 +140,19 @@ main {
 }
 
 .fire {
-  background: url(./assets/fire.svg) no-repeat center center;
+  background: url(/assets/images/fire.svg) no-repeat center center;
   background-size: 60px 60px;
 }
 .lightning {
-  background: url(./assets/lightning.svg) no-repeat center center;
+  background: url(/assets/images/lightning.svg) no-repeat center center;
   background-size: 60px 60px;
 }
 .wind {
-  background: url(./assets/wind.svg) no-repeat center center;
+  background: url(/assets/images/wind.svg) no-repeat center center;
   background-size: 60px 60px;
 }
 .leaf {
-  background: url(./assets/leaf.svg) no-repeat center center;
+  background: url(/assets/images/leaf.svg) no-repeat center center;
   background-size: 60px 60px;
 }
 
@@ -264,7 +263,7 @@ main {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.75);
-  z-index: 1;
+  z-index: 10;
   pointer-events: none;
   display: none;
 }
