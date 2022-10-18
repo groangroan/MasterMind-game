@@ -1,11 +1,12 @@
-import { selectionContainer } from '../../../index.js';
-const endGameModal = document.getElementById('end-game-modal');
-const backdrop = document.getElementById('backdrop');
-const closeModalBtn = endGameModal.querySelector('a');
+import { selectionContainer, clickSignHandler } from '../App/PlayGame.js';
+import { gameStatus } from '../App/CheckResults.js';
 
+const endGameModal = document.getElementById('end-game-modal');
+export const backdrop = document.getElementById('backdrop');
+const closeModalBtn = endGameModal.querySelector('a');
 const newGameModalBtn = endGameModal.querySelector('button');
 
-export const toggleModal = (status, gameOver) => {
+export const toggleModal = () => {
   const modalTitle = endGameModal.querySelector('h2');
   const modalText = endGameModal.querySelector('h3');
 
@@ -13,17 +14,17 @@ export const toggleModal = (status, gameOver) => {
 
   toggleBackdrop();
 
-  if (status === true) {
+  if (gameStatus.gameWin === true) {
     modalText.innerHTML = 'Congratulations.';
     modalTitle.innerHTML = 'YOU WON!';
     modalTitle.style.color = '#32cd32';
-  } else {
+  } else if (gameStatus.gameLost === true) {
     modalTitle.style.color = 'red';
     modalText.innerHTML = 'Game Over.';
     modalTitle.innerHTML = 'YOU LOST!';
   }
 
-  return (gameOver = true);
+  endGameClickHandler();
 };
 
 const toggleBackdrop = () => {
@@ -31,20 +32,23 @@ const toggleBackdrop = () => {
 };
 
 export const endGameClickHandler = () => {
-  selectionContainer.replaceWith(selectionContainer.cloneNode(true));
-  console.log(2);
+  selectionContainer.removeEventListener('click', clickSignHandler);
 };
 
+// const backdropClickHandler = () => {
+//   gameStatus.gameOver = true;
+//   toggleModal(endGameModal);
+// };
+
 newGameModalBtn.addEventListener('click', async () => {
-  try {
-    const { init } = await import('../../../index.js');
-    toggleModal();
-    init();
-    //return (gameOver = false);
-  } catch (err) {
-    console.log(err);
-  }
+  const { init } = await import('../App/Init.js');
+  toggleModal(endGameModal);
+  gameStatus.gameOver = false;
+  init();
 });
 
-closeModalBtn.addEventListener('click', endGameClickHandler);
-backdrop.addEventListener('click', endGameClickHandler);
+closeModalBtn.addEventListener('click', () => {
+  gameStatus.gameOver = true;
+  toggleModal(endGameModal);
+});
+// backdrop.addEventListener('click', backdropClickHandler);

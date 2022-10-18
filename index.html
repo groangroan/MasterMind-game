@@ -20,6 +20,66 @@
       <button>Play again</button>
     </div>
 
+    <div class="log-reg-form modal">
+      <div class="form-header">
+        <div class="active">Login</div>
+        <div>Sign up</div>
+      </div>
+      <div class="form-body">
+        <form class="active" id="login" novalidate>
+          <h3>Login to play</h3>
+          <input id="email" type="email" placeholder="Your email!" required />
+          <input
+            id="pswrd"
+            type="password"
+            placeholder="Your password"
+            required
+          />
+          <img src="/assets/images/show-pass.svg" alt="" />
+          <button type="submit">LOGIN</button>
+        </form>
+        <form id="signup" novalidate>
+          <h3>Sign up to play</h3>
+          <input id="user-name" type="text" placeholder="Your name" required />
+          <input
+            id="user-lastname"
+            type="text"
+            placeholder="Your last name"
+            required
+          />
+          <input
+            id="user-email"
+            type="email"
+            placeholder="Your email!"
+            required
+          />
+          <input
+            id="user-pswrd"
+            type="password"
+            placeholder="Your password"
+            required
+          />
+          <img src="/assets/images/show-pass.svg" alt="" />
+          <button type="submit">SIGN UP</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="high-scores" class="modal">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3">TOP 10 SCORES</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><button>OK</button></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
     <div class="container">
       <main id="game-board">
         <div class="game-col">
@@ -31,6 +91,9 @@
             <div class="game-field wind"></div>
             <div class="game-field leaf"></div>
           </div>
+        </div>
+        <div class="counter-container">
+          <progress value="0" max="120"></progress>
         </div>
         <div class="game-col" id="results-col">
           <div id="legend">

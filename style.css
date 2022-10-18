@@ -182,7 +182,7 @@ main {
 }
 
 .modal::after {
-  content: '';
+  /* content: ' '; */
   width: 440px;
   height: 320px;
   position: absolute;
@@ -272,3 +272,176 @@ main {
   display: block;
   pointer-events: all;
 }
+
+#high-scores.visible {
+  display: table;
+}
+
+#high-scores {
+  display: none;
+}
+
+#high-scores table {
+  padding: 20px;
+  border-spacing: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#high-scores td {
+  color: #ffffff;
+  padding: 5px 10px;
+  font-size: 1.3rem;
+}
+
+#high-scores th {
+  font-size: 1.5rem;
+  padding: 10px 0;
+  color: #32cd32;
+  width: 100%;
+}
+#high-scores tr {
+  display: flex;
+}
+
+#high-scores td:nth-child(1) {
+  width: 40px;
+  color: #32cd32;
+}
+
+#high-scores td:nth-child(4) {
+  color: #32cd32;
+}
+
+#high-scores tfoot td:nth-child(1) {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Login/Register form */
+
+.log-reg-form {
+  height: 460px;
+  gap: 30px;
+  justify-content: flex-start;
+  z-index: 50;
+}
+
+.form-header {
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  background-color: rgba(75, 73, 73, 0.822);
+  border-radius: 10px 10px 0 0;
+}
+
+.form-header div {
+  color: #ffffff;
+  display: flex;
+  flex: 1;
+  align-self: stretch;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.form-header .active {
+  background-color: #3f3f3f;
+  border-top-left-radius: 10px;
+}
+
+.form-body {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.form-body img {
+  width: 24px;
+  cursor: pointer;
+}
+.form-body form {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+}
+.form-body form.active {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 400px;
+  text-align: center;
+  align-content: center;
+  display: flex;
+}
+
+.active h3 {
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'] {
+  padding: 5px;
+  flex-basis: 90%;
+  align-self: baseline;
+}
+
+.form-body button {
+  margin: 20px auto;
+  padding: 10px 40px;
+}
+
+#err-msg {
+  width: 100%;
+  text-align: left;
+}
+
+.counter-container {
+  transform: translateY(-50%);
+  width: 50px;
+  height: 600px;
+  float: left;
+}
+
+progress {
+  display: block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-top: 448px;
+  margin-left: -300px;
+  transform: rotate(90deg);
+  width: 615px;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5),
+    0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+
+progress::-moz-progress-bar {
+  background: #fff;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+progress::-webkit-progress-bar {
+  background: #32cd32;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+progress::-webkit-progress-value {
+  background: #fff;
+}
+
+/* progress[value]::-webkit-progress-bar {
+  background-color: #ffffff;
+} */
