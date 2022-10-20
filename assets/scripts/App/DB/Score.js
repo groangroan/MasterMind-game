@@ -1,8 +1,8 @@
 import { user } from './Login.js';
 import { users } from './Signup.js';
-import { playerSelection } from '../PlayGame.js';
-import { setLS } from './LocalStorageHelpers.js';
-import { reverseCounter } from '../Timer.js';
+import { playerSelection } from '../Game/PlayGame.js';
+import { setLS } from '../Helpers/LocalStorageHelpers.js';
+import { reverseCounter } from '../Game/Timer.js';
 
 export const allScores = [];
 

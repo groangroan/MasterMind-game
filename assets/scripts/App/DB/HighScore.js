@@ -13,7 +13,7 @@ export const toggleHighScore = () => {
   highScoreContainer.classList.toggle('visible');
 };
 
-const setScores = () => {
+const addScore = () => {
   users.map(({ name, last_name, score }) => {
     score.forEach(userScore => {
       let oneGameScore = {
@@ -24,20 +24,15 @@ const setScores = () => {
       allScores.push(oneGameScore);
     });
   });
-};
 
-export const highScoreHandler = () => {
-  setScores();
   allScores.sort((a, b) => b.score - a.score);
+
   topTenScores = allScores.slice(0, 10);
 };
 
 export const createHighScoreTable = () => {
-  highScoreHandler();
+  addScore();
   if (allScores.length > 0) {
-    console.log(allScores);
-    console.log(topTenScores);
-
     for (let i = 0; i < topTenScores.length; i++) {
       const hsRow = document.createElement('tr');
       hsTableBody.append(hsRow);

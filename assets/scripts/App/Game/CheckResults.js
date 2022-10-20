@@ -1,4 +1,3 @@
-import { secretCombination } from './SecretCombination.js';
 import { oneRound } from './PlayGame.js';
 
 export let rowIdNum = 0;
@@ -10,23 +9,15 @@ export const gameStatus = {
   gameOver: false
 };
 
-// export let gameWin = false;
-// export let gameOver = false;
-// export let gameLost = false;
-
-// export const setGameLost = val => (gameLost = val);
-// export const setGameWin = val => (gameWin = val);
-// export const setGameOver = val => (gameOver = val);
-
 export const checkResult = () => {
   const maxRoundsNum = 6;
   Promise.all([
     import('./PlayGame.js'),
     import('./SecretCombination.js'),
-    import('../App/DB/Score.js'),
-    import('../App/DB/HighScore.js')
+    import('../DB/Score.js'),
+    import('../DB/HighScore.js')
   ]).then(([play, secret, score, highScore]) => {
-    if (secretCombination?.every((v, i) => v === oneRound[i])) {
+    if (secret.secretCombination?.every((v, i) => v === oneRound[i])) {
       gameStatus.gameWin = true;
       score.updateScore();
       secret.displaySecretCombination();
@@ -46,37 +37,32 @@ export const checkResult = () => {
 
 export const matchingResults = () => {
   Promise.all([
-    import('../Components/RowCreate.js'),
-    import('./GameBoard.js')
-  ]).then(([row, cssClass]) => {
+    import('../../Components/RowCreate.js'),
+    import('./GameBoard.js'),
+    import('./SecretCombination.js')
+  ]).then(([row, cssClass, secret]) => {
     let resultFields = row.resultRow[rowIdNum].querySelectorAll(
       `.${cssClass.gameFieldCssClass}`
     );
 
     let resultFieldsArr = Array.from(resultFields);
-    const [exactMatch, valueMatch, noMatch] = [
-      'exact-match',
-      'value-match',
-      'no-match'
-    ];
+    const [exactMatch, valueMatch] = ['exact-match', 'value-match'];
 
-    const secretCombinationCopy = [...secretCombination];
+    const secretCombinationCopy = [...secret.secretCombination];
     const oneRoundCopy = [...oneRound];
 
-    for (let i = 0; i < secretCombination.length; i++) {
-      if (secretCombination[i] === oneRoundCopy[i]) {
+    for (let i = 0; i < secret.secretCombination.length; i++) {
+      if (secret.secretCombination[i] === oneRoundCopy[i]) {
         resultFields[i].classList.add(exactMatch);
         secretCombinationCopy[i] = 0;
         oneRoundCopy[i] = -1;
       }
     }
 
-    for (let j = 0; j < secretCombination.length; j++) {
+    for (let j = 0; j < secret.secretCombination.length; j++) {
       if (secretCombinationCopy.indexOf(oneRoundCopy[j]) !== -1) {
         resultFields[j].classList.add(valueMatch);
         secretCombinationCopy[secretCombinationCopy.indexOf(oneRound[j])] = 0;
-      } else if (!resultFields[j].classList.contains(exactMatch)) {
-        resultFields[j].classList.add(noMatch);
       }
     }
 
@@ -90,8 +76,10 @@ export const matchingResults = () => {
     const valueMatchArr = resultFieldsArr.filter(e =>
       e.matches(`.${cssClass.gameFieldCssClass}.${valueMatch}`)
     );
-    const noMatchArr = resultFieldsArr.filter(e =>
-      e.matches(`.${cssClass.gameFieldCssClass}.${noMatch}`)
+    const noMatchArr = resultFieldsArr.filter(
+      e =>
+        !e.classList.contains(`${exactMatch}`) &&
+        !e.classList.contains(`${valueMatch}`)
     );
 
     resultFieldsArr = [...exactMatchArr, ...valueMatchArr, ...noMatchArr];
@@ -106,8 +94,8 @@ export const matchingResults = () => {
 
 export const modalClickHandler = () => {
   Promise.all([
-    import('../Components/Modal.js'),
-    import('../App/DB/HighScore.js')
+    import('../../Components/Modal.js'),
+    import('../DB/HighScore.js')
   ]).then(([modal, highScore]) => {
     highScore.toggleHighScore();
     modal.toggleModal();

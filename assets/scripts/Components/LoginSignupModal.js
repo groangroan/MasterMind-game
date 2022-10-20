@@ -31,22 +31,3 @@ export const loginSignupToggle = () => {
     });
   }
 };
-
-export const errMessageHandler = (errMessage, el, errText) => {
-  errMessage = document.createElement('p');
-  errMessage.textContent = errText;
-  errMessage.style.color = 'red';
-  errMessage.id = 'err-msg';
-  el.after(errMessage);
-  return errMessage;
-};
-
-export const showPassHandler = (el, pass) => {
-  el.addEventListener('click', () => {
-    if (pass.type === 'password') {
-      pass.type = 'text';
-    } else {
-      pass.type = 'password';
-    }
-  });
-};

@@ -282,11 +282,11 @@ main {
 }
 
 #high-scores table {
+  margin: 0 auto;
   padding: 20px;
   border-spacing: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: table;
+  width: 360px;
 }
 
 #high-scores td {
@@ -299,10 +299,10 @@ main {
   font-size: 1.5rem;
   padding: 10px 0;
   color: #32cd32;
-  width: 100%;
+  margin: 0 auto;
 }
 #high-scores tr {
-  display: flex;
+  display: table-row;
 }
 
 #high-scores td:nth-child(1) {
@@ -315,9 +315,9 @@ main {
 }
 
 #high-scores tfoot td:nth-child(1) {
-  width: 200px;
   margin: 0 auto;
   text-align: center;
+  width: 100%;
 }
 
 /* Login/Register form */

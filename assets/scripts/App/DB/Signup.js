@@ -1,6 +1,5 @@
 import { default as uuidv4 } from '../../../../node_modules/uuid/dist/esm-browser/v4.js';
-import { backdrop } from '../../Components/Modal.js';
-import { getUsers } from './LocalStorageHelpers.js';
+import { getUsers } from '../Helpers/LocalStorageHelpers.js';
 import {
   formHeaderTabs,
   formBodyElements
@@ -19,22 +18,11 @@ const mailErrText = `Your email must contain @ sign.`;
 
 export const users = getUsers ? JSON.parse(getUsers) : [];
 
-const emptySignupForm = () => {
-  uName.value = '';
-  uLastName.value = '';
-  uEmail.value = '';
-  uPassword.value = '';
-};
-
 const signupValidation = (newUser, userEmail, userPass) => {
   const mailVal = /@/.test(uEmail.value);
 
-  if (getUsers === null && userPass.length > 4 && mailVal === true) {
-    users.push(newUser);
-  }
-
-  if (uPassword.value.length < 4) {
-    import('../../Components/LoginSignupModal.js').then(msg => {
+  if (userPass.length < 4) {
+    import('../Helpers/ErrorMessage.js').then(msg => {
       if (regErrMessage === undefined) {
         regErrMessage = msg.errMessageHandler(
           regErrMessage,
@@ -49,7 +37,7 @@ const signupValidation = (newUser, userEmail, userPass) => {
   }
 
   if (mailVal === false) {
-    import('../../Components/LoginSignupModal.js').then(msg => {
+    import('../Helpers/ErrorMessage.js').then(msg => {
       if (regErrMessage === undefined) {
         regErrMessage = msg.errMessageHandler(
           regErrMessage,
@@ -81,28 +69,35 @@ const signupValidation = (newUser, userEmail, userPass) => {
   formBodyElements[0].classList.add('active');
 };
 
+const emptySignupForm = () => {
+  uName.value = '';
+  uLastName.value = '';
+  uEmail.value = '';
+  uPassword.value = '';
+};
+
+const signupHandler = e => {
+  e.preventDefault();
+
+  const userId = uuidv4();
+  const userData = {
+    id: userId,
+    name: uName.value,
+    last_name: uLastName.value,
+    email: uEmail.value,
+    password: uPassword.value,
+    score: []
+  };
+
+  signupValidation(userData, userData.email, uPassword.value);
+  localStorage.setItem('users', JSON.stringify(users));
+  emptySignupForm();
+};
+
 export const signup = () => {
-  import('../../Components/LoginSignupModal.js').then(pswrd => {
+  import('../../App/Helpers/PassShowHide.js').then(pswrd => {
     pswrd.showPassHandler(showPass, uPassword);
   });
-
-  const signupHandler = e => {
-    e.preventDefault();
-
-    const userId = uuidv4();
-    const userData = {
-      id: userId,
-      name: uName.value,
-      last_name: uLastName.value,
-      email: uEmail.value,
-      password: uPassword.value,
-      score: []
-    };
-
-    signupValidation(userData, userData.email, uPassword.value);
-    localStorage.setItem('users', JSON.stringify(users));
-    emptySignupForm();
-  };
 
   signupForm.addEventListener('submit', signupHandler);
 };

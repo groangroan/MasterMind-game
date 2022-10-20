@@ -1,5 +1,5 @@
-import { gameField, createField } from '../Components/FieldCreate.js';
-import { resultRow, createRow } from '../Components/RowCreate.js';
+import { gameField, createField } from '../../Components/FieldCreate.js';
+import { resultRow, createRow } from '../../Components/RowCreate.js';
 
 export const gameBoardContainer = document.querySelector('.game-row');
 export const secretCombContainer = document.getElementById('game-header');

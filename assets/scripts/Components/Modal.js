@@ -1,5 +1,4 @@
-import { selectionContainer, clickSignHandler } from '../App/PlayGame.js';
-import { gameStatus } from '../App/CheckResults.js';
+import { gameStatus } from '../App/Game/CheckResults.js';
 
 const endGameModal = document.getElementById('end-game-modal');
 export const backdrop = document.getElementById('backdrop');
@@ -32,16 +31,16 @@ const toggleBackdrop = () => {
 };
 
 export const endGameClickHandler = () => {
-  selectionContainer.removeEventListener('click', clickSignHandler);
+  async () => {
+    const { selectionContainer, clickSignHandler } = await import(
+      '../App/PlayGame.js'
+    );
+    selectionContainer.removeEventListener('click', clickSignHandler);
+  };
 };
 
-// const backdropClickHandler = () => {
-//   gameStatus.gameOver = true;
-//   toggleModal(endGameModal);
-// };
-
 newGameModalBtn.addEventListener('click', async () => {
-  const { init } = await import('../App/Init.js');
+  const { init } = await import('../App/Game/Init.js');
   toggleModal(endGameModal);
   gameStatus.gameOver = false;
   init();
@@ -51,4 +50,3 @@ closeModalBtn.addEventListener('click', () => {
   gameStatus.gameOver = true;
   toggleModal(endGameModal);
 });
-// backdrop.addEventListener('click', backdropClickHandler);
